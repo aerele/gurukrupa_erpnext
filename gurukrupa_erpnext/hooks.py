@@ -5,6 +5,18 @@ app_description = "This app includes customizations for the ERPNext Manufacturin
 app_email = "hello@aerele.in"
 app_license = "mit"
 
+
+doc_events = {
+	"Stock Entry": {
+		"on_submit": "gurukrupa_erpnext.gurukrupa_erpnext.cms.utils.create_customer_main_slip",
+	},
+	"Batch": {
+		"autoname": "gurukrupa_erpnext.gurukrupa_erpnext.overrides.custom_batch.autoname",
+	},
+}
+
+after_install = "gurukrupa_erpnext.gurukrupa_erpnext.install.after_install"
+
 # Apps
 # ------------------
 
@@ -241,4 +253,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
