@@ -5,6 +5,7 @@ app_description = "This app includes customizations for the ERPNext Manufacturin
 app_email = "hello@aerele.in"
 app_license = "mit"
 
+
 # Apps
 # ------------------
 
@@ -83,7 +84,7 @@ app_license = "mit"
 # ------------
 
 # before_install = "gurukrupa_erpnext.install.before_install"
-# after_install = "gurukrupa_erpnext.install.after_install"
+after_install = "gurukrupa_erpnext.gurukrupa_erpnext.install.after_install"
 
 # Uninstallation
 # ------------
@@ -137,13 +138,11 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Stock Entry": {
+		"on_submit": "gurukrupa_erpnext.gurukrupa_erpnext.doctype.customer_metal_main_slip.cms_utils.create_customer_main_slip",
+	},
+}
 
 # Scheduled Tasks
 # ---------------
@@ -241,4 +240,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-

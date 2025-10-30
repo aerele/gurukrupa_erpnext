@@ -1,0 +1,12 @@
+{
+  "Warehouse": [
+    {
+      "fieldname": "custom_checkbox_field",
+      "label": "Is Customer Main Slip",
+      "fieldtype": "Check",
+      "insert_after": "is_group",
+      "default": 0,
+      "description": "Check this box if the warehouse is used for Customer Main Slip"
+    }
+  ]
+}
