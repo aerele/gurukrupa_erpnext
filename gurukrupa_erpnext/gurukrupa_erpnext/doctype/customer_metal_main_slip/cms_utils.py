@@ -1,5 +1,4 @@
 import frappe
-
 from frappe.model.naming import make_autoname
 
 
@@ -42,7 +41,6 @@ def create_customer_main_slip(doc, method):
 		if frappe.db.exists("Customer Metal Main Slip", {"batch_no": row.batch_no}):
 			frappe.throw(f"CMS already exists for Batch {row.batch_no}")
 
-		
 		customer = None
 
 		if ref_doctype == "Stock Entry":
@@ -74,43 +72,19 @@ def create_customer_main_slip(doc, method):
 		cms.batch_no = row.batch_no
 		cms.voucher_type = ref_doctype
 		cms.voucher_no = ref_name
+		cms.append(
+			"batch_details",
+			{
+				"batch_no": row.batch_no,
+				"item_code": row.item_code,
+				"msl_qty": row.qty,
+				"msl_consume_qty": 0.0,
+				"consumed_qty": 0.0,
+				"auto_created": "No",
+				"inventory_type": "Customer Goods",
+				"balance_qty": row.qty,
+			},
+		)
 		cms.insert(ignore_permissions=True)
 
 		frappe.msgprint(f"Customer Metal Main Slip {cms.name} created successfully for Batch {row.batch_no}")
-
-def rename_batch_for_cms(self):
-	inventory_type_field_map = {
-		"Stock Entry": "stock_entry_type",
-		"Purchase Receipt": "inventory_type"
-	}
-
-	customer_name_field_map = {
-		"Stock Entry": "_customer",
-		"Purchase Receipt": "customer"
-	}
-
-	def _get_field_values(reference_type, reference_name, fieldname, customer_field):
-		key = "name"
-		if reference_type == "Purchase Receipt":
-			reference_type = f"{reference_type} Item"
-			key = "parent"
-
-		return frappe.db.get_value(reference_type,{key: reference_name}, [fieldname, customer_field])
-
-	inventory_type, customer = _get_field_values(
-		self.reference_doctype,
-		self.reference_name,
-		inventory_type_field_map.get(self.reference_doctype),
-		customer_name_field_map.get(self.reference_doctype)
-	)
-
-	item_code = self.item
-
-	if inventory_type in ["Customer Goods Received", "Customer Goods"] and "24KT" in item_code:
-		if customer:
-			naming_series = f"{customer}-.YY.-.MM.-{item_code}-.##"
-			self.name = make_autoname(naming_series)
-			return self.name
-	
-	return None
-
