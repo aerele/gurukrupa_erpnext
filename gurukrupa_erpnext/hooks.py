@@ -142,6 +142,9 @@ doc_events = {
 	"Stock Entry": {
 		"on_submit": "gurukrupa_erpnext.gurukrupa_erpnext.doctype.customer_metal_main_slip.cms_utils.create_customer_main_slip",
 	},
+	"Batch": {
+		"autoname": "gurukrupa_erpnext.gurukrupa_erpnext.doc_events.batch.autoname",
+	},
 }
 
 # Scheduled Tasks
