@@ -9,7 +9,7 @@ frappe.ui.form.on("Department", {
 						frappe.call({
 							method: "gurukrupa_erpnext.customization.department.delete_dpartment",
 							args: {
-								deparmrnt_id: frm.doc.name,
+								department_id: frm.doc.name,
 							},
 							callback: function () {
 								frappe.set_route("List", "Department");
