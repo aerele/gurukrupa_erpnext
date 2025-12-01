@@ -1,6 +1,6 @@
 frappe.ui.form.on("Department", {
 	refresh: function (frm) {
-		if (frm.doc.disabled && !cur_frm.doc.__unsaved) {
+		if (frm.doc.disabled && !cur_frm.doc.__unsaved && frappe.perm.has_perm("Department",0,"delete")) {
 			frm.add_custom_button(__("Delete"), function () {
 				frappe.warn(
 					"Are you sure you want to Delete?",
